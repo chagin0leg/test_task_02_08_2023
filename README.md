@@ -2,7 +2,7 @@
 
 Test task for the Starline job vacancy "Embedded developer"
 
-## Nt[ybxtcrjt задание:
+## Техническое задание:
 
 Реализовать программный модуль управления кольцевым буфером на 100 байт для STM32F412:
 - извлечение байта
