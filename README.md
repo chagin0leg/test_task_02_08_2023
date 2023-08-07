@@ -1,6 +1,6 @@
-# starline_test_task
+# test_task_02_08_2023
 
-Test task for the Starline job vacancy "Embedded developer"
+Тестовое задание от 02.08.2023.
 
 ## Техническое задание
 
