@@ -1,7 +1,7 @@
 #ifndef SELECT_SIZE_H
 #define SELECT_SIZE_H
 
-#include "static_if.h"
+#include "static_if.hpp"
 #include <stdint.h>
 
 	template<unsigned sizeBits>

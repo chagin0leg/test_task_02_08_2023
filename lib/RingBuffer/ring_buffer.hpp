@@ -1,8 +1,8 @@
 #ifndef RING_BUFFER_H
 #define RING_BUFFER_H
 
-#include "static_assert.h"
-#include "select_size.h"
+#include "static_assert.hpp"
+#include "select_size.hpp"
 
 template<int SIZE, class DATA_T=unsigned char>
 class RingBuffer
