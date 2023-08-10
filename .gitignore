@@ -8,3 +8,8 @@ RTE/
 keil.uvguix.*
 JLinkLog.txt
 JLinkSettings.ini
+
+*.pdf
+*.html
+*.png
+*jpg
