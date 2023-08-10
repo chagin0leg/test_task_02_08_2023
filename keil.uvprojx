@@ -405,7 +405,7 @@
             </File>
             <File>
               <FileName>random.hpp</FileName>
-              <FileType>9</FileType>
+              <FileType>5</FileType>
               <FilePath>.\lib\Random\random.hpp</FilePath>
             </File>
           </Files>
