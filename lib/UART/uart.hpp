@@ -4,6 +4,8 @@
 #include "stm32f4xx.h"
 #include "ring_buffer.hpp"
 
+// #define GPIO_AF7_USART1 ((uint8_t)0x07) /* USART1 Alternate Function mapping for keil */
+
 enum parity_t
 {
     NO,
@@ -11,7 +13,7 @@ enum parity_t
     ODD
 };
 
-template <int NUMBER_OF_UART>
+template <const int NUMBER_OF_UART>
 class USART
 {
 public:
@@ -32,12 +34,14 @@ public:
 
             while (READ_BIT(base->SR, USART_SR_TXE) != (USART_SR_TXE))
                 ;
-            base->DR = *data++;
-						SET_BIT(base->CR1, USART_CR1_TCIE);
+
+            SET_BIT(base->CR1, USART_CR1_TCIE);
 
             while (data < end)
                 if (tx.Write(*data))
                     data++;
+                else
+                    SET_BIT(base->CR1, USART_CR1_TCIE);
         }
     }
 
@@ -46,31 +50,23 @@ public:
         if (NUMBER_OF_UART == 1)
         {
             SET_BIT(RCC->APB2ENR, RCC_APB2ENR_USART1EN);
-            while (!READ_BIT(RCC->APB2ENR, RCC_APB2ENR_USART1EN));
+            while (!READ_BIT(RCC->APB2ENR, RCC_APB2ENR_USART1EN))
+                ;
 
             SET_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPIOAEN);
-            while (!READ_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPIOAEN));
+            while (!READ_BIT(RCC->AHB1ENR, RCC_AHB1ENR_GPIOAEN))
+                ;
 
-						#define GPIO_AF7_USART1        ((uint8_t)0x07)  /* USART1 Alternate Function mapping     */
+            MODIFY_REG(GPIOA->MODER, GPIO_MODER_MODE9_Msk, GPIO_MODER_MODE9_1);
+            MODIFY_REG(GPIOA->AFR[1], GPIO_AFRH_AFSEL9_Msk, GPIO_AFRH_AFSEL9_0 | GPIO_AFRH_AFSEL9_1 | GPIO_AFRH_AFSEL9_2);
 
-						// Настройка пина PA9 (TX)
-						GPIOA->MODER &= ~(GPIO_MODER_MODE9); // Сброс битов MODE
-						GPIOA->MODER |= GPIO_MODER_MODE9_1; // Альтернативная функция
-						GPIOA->AFR[1] &= ~(0xF << ((9 - 8) * 4)); // Сброс битов AF
-						GPIOA->AFR[1] |= (GPIO_AF7_USART1 << ((9 - 8) * 4)); // Выбор альтернативной функции
-
-						// Настройка пина PA10 (RX)
-						GPIOA->MODER &= ~(GPIO_MODER_MODE10); // Сброс битов MODE
-						GPIOA->MODER |= GPIO_MODER_MODE10_1; // Альтернативная функция
-						GPIOA->AFR[1] &= ~(0xF << ((10 - 8) * 4)); // Сброс битов AF
-						GPIOA->AFR[1] |= (GPIO_AF7_USART1 << ((10 - 8) * 4)); // Выбор альтернативной функции
+            MODIFY_REG(GPIOA->MODER, GPIO_MODER_MODE10_Msk, GPIO_MODER_MODE10_1);
+            MODIFY_REG(GPIOA->AFR[1], GPIO_AFRH_AFSEL10_Msk, GPIO_AFRH_AFSEL10_0 | GPIO_AFRH_AFSEL10_1 | GPIO_AFRH_AFSEL10_2);
         }
 
         if (READ_BIT(base->CR1, USART_CR1_UE) != (USART_CR1_UE))
         {
-            MODIFY_REG(base->CR1,
-                       USART_CR1_M | USART_CR1_PCE | USART_CR1_PS,
-                       USART_CR1_TE | USART_CR1_RE);
+            MODIFY_REG(base->CR1, USART_CR1_M | USART_CR1_PCE | USART_CR1_PS, USART_CR1_TE | USART_CR1_RE);
         }
 
         CLEAR_BIT(base->CR2, (USART_CR2_LINEN | USART_CR2_CLKEN));
@@ -84,8 +80,8 @@ public:
         MODIFY_REG(base->CR2, USART_CR2_STOP, (stop_bits != 1) ? USART_CR2_STOP_1 : 0);
 
         SET_BIT(base->CR1, USART_CR1_UE);
-				NVIC_EnableIRQ(USART1_IRQn);
-				USART1->CR1 |= USART_CR1_RXNEIE;
+        NVIC_EnableIRQ(USART1_IRQn);
+        USART1->CR1 |= USART_CR1_RXNEIE;
     }
 
     volatile void IRQHandler(void)
@@ -107,11 +103,9 @@ public:
                 while (READ_BIT(base->SR, USART_SR_TXE) != (USART_SR_TXE))
                     ;
                 base->DR = byte_to_transmit;
-								(void)byte_to_transmit;
             }
-						else {
-								CLEAR_BIT(base->CR1, USART_CR1_TCIE);
-						}
+            else
+                CLEAR_BIT(base->CR1, USART_CR1_TCIE);
         }
     }
 

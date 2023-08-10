@@ -313,10 +313,10 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>1</OneElfS>
+            <OneElfS>0</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
@@ -339,7 +339,7 @@
               <MiscControls>-x c++ -std=c++17</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\lib;.\src;.\test;.\include;.\lib\UART;.\lib\RingBuffer;.\lib\SysClock</IncludePath>
+              <IncludePath>.\lib;.\src;.\test;.\include;.\lib\UART;.\lib\RingBuffer;.\lib\SysClock;.\lib\Random</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -402,6 +402,11 @@
               <FileName>uart.hpp</FileName>
               <FileType>5</FileType>
               <FilePath>.\lib\UART\uart.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>random.hpp</FileName>
+              <FileType>9</FileType>
+              <FilePath>.\lib\Random\random.hpp</FilePath>
             </File>
           </Files>
         </Group>
