@@ -84,7 +84,7 @@ public:
         USART1->CR1 |= USART_CR1_RXNEIE;
     }
 
-    volatile void IRQHandler(void)
+    void IRQHandler(void)
     {
         if ((READ_BIT(base->SR, USART_SR_RXNE) == (USART_SR_RXNE)) && (READ_BIT(base->CR1, USART_CR1_RXNEIE) == (USART_CR1_RXNEIE)))
             RX.Write((uint8_t)(base->DR & 0x00FF));

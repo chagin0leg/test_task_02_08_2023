@@ -17,12 +17,12 @@ public:
         srand(seed);
     }
 
-    uint8_t getByte(uint8_t min = 0, uint8_t max = UINT8_MAX)
+    uint8_t getByte(uint8_t min = 0, uint8_t max = 0xFF)
     {
         return uint8_t(((rand() % (max - min + 1)) + min)& 0xFF);
     }
 
-    int16_t get(int16_t min = 0, int16_t max = INT16_MAX)
+    int16_t get(int16_t min = 0, int16_t max = 0x7FFF)
     {
         return int16_t((rand() % (max - min + 1)) + min);
     }
