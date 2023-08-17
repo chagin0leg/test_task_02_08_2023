@@ -2,7 +2,7 @@
 #define __UART_H
 
 #include "stm32f4xx.h"
-#include "ring_buffer.hpp"
+#include "ring_buffer.h"
 
 // #define GPIO_AF7_USART1 ((uint8_t)0x07) /* USART1 Alternate Function mapping for keil */
 
@@ -13,7 +13,7 @@ enum parity_t
     ODD
 };
 
-template <const int NUMBER_OF_UART>
+template <const uint8_t NUMBER_OF_UART>
 class USART
 {
 public:
@@ -22,9 +22,11 @@ public:
         sys_clock = system_clock;
         if (NUMBER_OF_UART)
             base = USART1;
+        RingBuffer_init(&RX, rx_array, sizeof rx_array);
+        RingBuffer_init(&tx, tx_array, sizeof tx_array);
     }
 
-    RingBuffer<128> RX;
+    RingBuffer RX;
 
     void TX(uint8_t *data, uint16_t size)
     {
@@ -38,7 +40,7 @@ public:
             SET_BIT(base->CR1, USART_CR1_TCIE);
 
             while (data < end)
-                if (tx.Write(*data))
+                if (RingBuffer_write(&tx, *data))
                     data++;
                 else
                     SET_BIT(base->CR1, USART_CR1_TCIE);
@@ -87,7 +89,7 @@ public:
     void IRQHandler(void)
     {
         if ((READ_BIT(base->SR, USART_SR_RXNE) == (USART_SR_RXNE)) && (READ_BIT(base->CR1, USART_CR1_RXNEIE) == (USART_CR1_RXNEIE)))
-            RX.Write((uint8_t)(base->DR & 0x00FF));
+            RingBuffer_write(&RX, (uint8_t)(base->DR & 0x00FF));
         else if (READ_BIT(base->SR, USART_SR_ORE) == (USART_SR_ORE))
             (void)base->DR;
         else if (READ_BIT(base->SR, USART_SR_FE) == (USART_SR_FE))
@@ -98,7 +100,7 @@ public:
         if ((READ_BIT(base->SR, USART_SR_TXE) == (USART_SR_TXE)) && (READ_BIT(base->CR1, USART_CR1_TCIE) == (USART_CR1_TCIE)))
         {
             uint8_t byte_to_transmit = 0x00;
-            if (tx.Read(byte_to_transmit))
+            if (RingBuffer_read(&tx, &byte_to_transmit))
             {
                 while (READ_BIT(base->SR, USART_SR_TXE) != (USART_SR_TXE))
                     ;
@@ -110,10 +112,11 @@ public:
     }
 
 private:
-    BOOST_STATIC_ASSERT(NUMBER_OF_UART == 1); // only for USART1. for now :)
     USART_TypeDef *base;
     uint32_t *sys_clock;
-    RingBuffer<128> tx;
+    uint8_t tx_array[128]; // size must be 2^n
+    uint8_t rx_array[128]; // size must be 2^n
+    RingBuffer tx;
 };
 
 #endif // !__UART_H

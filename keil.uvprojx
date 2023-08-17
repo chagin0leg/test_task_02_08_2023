@@ -395,9 +395,9 @@
               <FilePath>.\lib\SysClock\sys_clock.cpp</FilePath>
             </File>
             <File>
-              <FileName>ring_buffer.hpp</FileName>
+              <FileName>ring_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\lib\RingBuffer\ring_buffer.hpp</FilePath>
+              <FilePath>.\lib\RingBuffer\ring_buffer.h</FilePath>
             </File>
             <File>
               <FileName>uart.hpp</FileName>
@@ -405,9 +405,9 @@
               <FilePath>.\lib\UART\uart.hpp</FilePath>
             </File>
             <File>
-              <FileName>random.hpp</FileName>
+              <FileName>random.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\lib\Random\random.hpp</FilePath>
+              <FilePath>.\lib\Random\random.h</FilePath>
             </File>
           </Files>
         </Group>

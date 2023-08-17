@@ -328,8 +328,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\lib\RingBuffer\ring_buffer.hpp</PathWithFileName>
-      <FilenameWithoutPath>ring_buffer.hpp</FilenameWithoutPath>
+      <PathWithFileName>.\lib\RingBuffer\ring_buffer.h</PathWithFileName>
+      <FilenameWithoutPath>ring_buffer.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -352,8 +352,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\lib\Random\random.hpp</PathWithFileName>
-      <FilenameWithoutPath>random.hpp</FilenameWithoutPath>
+      <PathWithFileName>.\lib\Random\random.h</PathWithFileName>
+      <FilenameWithoutPath>random.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
