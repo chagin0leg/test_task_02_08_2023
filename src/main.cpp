@@ -6,10 +6,10 @@
 
 #include "uart.hpp"
 #include "sys_clock.hpp"
-#include "random.hpp"
+#include "random.h"
 
 USART<1> uart(&SystemCoreClock);
-RANDOM<2023> Random;
+RANDOM Random = {_init, _getByte, _get};
 uint8_t global_array[256];
 
 extern "C" void SysTick_Handler(void)
@@ -30,12 +30,12 @@ int main(void)
   SysTick_Config(SystemCoreClock / 1000);
 
   uart.Init(115200, 8, NO, 1);
-  Random.Init();
+  Random.Init(2023);
   while (true)
   {
     delay_ms(Random.get(500, 2500));
 
-    uint8_t size = Random.getByte();
+    uint8_t size = Random.getByte(0x00, 0xFF);
     for (uint8_t i = 0; i < size; i++)
       global_array[i] = Random.getByte('a', 'z');
     uart.TX(global_array, size);
