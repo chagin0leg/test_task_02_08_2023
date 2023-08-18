@@ -340,8 +340,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\lib\UART\uart.hpp</PathWithFileName>
-      <FilenameWithoutPath>uart.hpp</FilenameWithoutPath>
+      <PathWithFileName>.\lib\UART\uart.h</PathWithFileName>
+      <FilenameWithoutPath>uart.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

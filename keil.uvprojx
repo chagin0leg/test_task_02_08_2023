@@ -400,9 +400,9 @@
               <FilePath>.\lib\RingBuffer\ring_buffer.h</FilePath>
             </File>
             <File>
-              <FileName>uart.hpp</FileName>
+              <FileName>uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\lib\UART\uart.hpp</FilePath>
+              <FilePath>.\lib\UART\uart.h</FilePath>
             </File>
             <File>
               <FileName>random.h</FileName>
