@@ -4,5 +4,10 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"*.drawio": "drawio",
+			"sys_clock.h": "c"
+		}
+	}
 }
