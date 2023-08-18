@@ -385,29 +385,29 @@
           <GroupName>user</GroupName>
           <Files>
             <File>
-              <FileName>main.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\src\main.cpp</FilePath>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main.c</FilePath>
             </File>
             <File>
-              <FileName>sys_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\lib\SysClock\sys_clock.h</FilePath>
+              <FileName>sys_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\lib\SysClock\sys_clock.c</FilePath>
             </File>
             <File>
-              <FileName>ring_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\lib\RingBuffer\ring_buffer.h</FilePath>
+              <FileName>ring_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\lib\RingBuffer\ring_buffer.c</FilePath>
             </File>
             <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\lib\UART\uart.h</FilePath>
+              <FileName>uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\lib\UART\uart.c</FilePath>
             </File>
             <File>
-              <FileName>random.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\lib\Random\random.h</FilePath>
+              <FileName>random.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\lib\Random\random.c</FilePath>
             </File>
           </Files>
         </Group>
