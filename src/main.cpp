@@ -5,16 +5,16 @@
 #include "stm32f4xx.h"
 
 #include "uart.h"
-#include "sys_clock.hpp"
+#include "sys_clock.h"
 #include "random.h"
 
 USART uart;
 RANDOM Random = {_init, _getByte, _get};
-uint8_t global_array[256];
+SYS_TICK sys_tick = {0};
 
 void SysTick_Handler(void)
 {
-  SysTickHandler();
+  SysTickHandler(&sys_tick);
 }
 
 void USART1_IRQHandler(void)
@@ -31,9 +31,11 @@ int main(void)
   USART_init(&uart, &SystemCoreClock, USART1);
   USART_begin(&uart, 115200, 8, NO, 1);
   Random.Init(2023);
+
+  uint8_t global_array[256] = {0};
   while (1)
   {
-    delay_ms(Random.get(500, 2500));
+    delay_ms(&sys_tick, Random.get(500, 2500));
 
     uint8_t size = Random.getByte(0x00, 0xFF);
     for (uint8_t i = 0; i < size; i++)

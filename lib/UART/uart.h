@@ -1,6 +1,7 @@
 #ifndef __UART_H
 #define __UART_H
 
+#include <stdint.h>
 #include "stm32f4xx.h"
 #include "ring_buffer.h"
 
@@ -18,14 +19,14 @@ typedef struct USART
     uint8_t tx_array[128]; // size must be 2^n
     uint8_t rx_array[128]; // size must be 2^n
     RingBuffer tx;
-    RingBuffer RX;
+    RingBuffer rx;
 } USART;
 
 void USART_init(USART *usart, uint32_t *system_clock, USART_TypeDef *base)
 {
     usart->sys_clock = system_clock;
     usart->base = base;
-    RingBuffer_init(&usart->RX, usart->rx_array, sizeof usart->rx_array);
+    RingBuffer_init(&usart->rx, usart->rx_array, sizeof usart->rx_array);
     RingBuffer_init(&usart->tx, usart->tx_array, sizeof usart->tx_array);
 }
 
@@ -66,6 +67,11 @@ void USART_begin(USART *usart, uint32_t baud_rate, uint32_t data_bits, parity_t 
         MODIFY_REG(GPIOA->MODER, GPIO_MODER_MODE10_Msk, GPIO_MODER_MODE10_1);
         MODIFY_REG(GPIOA->AFR[1], GPIO_AFRH_AFSEL10_Msk, GPIO_AFRH_AFSEL10_0 | GPIO_AFRH_AFSEL10_1 | GPIO_AFRH_AFSEL10_2);
     }
+    else
+    {
+        while (1)
+            ;
+    }
 
     if (READ_BIT(usart->base->CR1, USART_CR1_UE) != (USART_CR1_UE))
     {
@@ -90,7 +96,7 @@ void USART_begin(USART *usart, uint32_t baud_rate, uint32_t data_bits, parity_t 
 void USART_IRQHandler(USART *usart)
 {
     if ((READ_BIT(usart->base->SR, USART_SR_RXNE) == (USART_SR_RXNE)) && (READ_BIT(usart->base->CR1, USART_CR1_RXNEIE) == (USART_CR1_RXNEIE)))
-        RingBuffer_write(&usart->RX, (uint8_t)(usart->base->DR & 0x00FF));
+        RingBuffer_write(&usart->rx, (uint8_t)(usart->base->DR & 0x00FF));
     else if (READ_BIT(usart->base->SR, USART_SR_ORE) == (USART_SR_ORE))
         (void)usart->base->DR;
     else if (READ_BIT(usart->base->SR, USART_SR_FE) == (USART_SR_FE))

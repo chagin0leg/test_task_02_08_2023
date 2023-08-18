@@ -390,9 +390,9 @@
               <FilePath>.\src\main.cpp</FilePath>
             </File>
             <File>
-              <FileName>sys_clock.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\lib\SysClock\sys_clock.cpp</FilePath>
+              <FileName>sys_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\lib\SysClock\sys_clock.h</FilePath>
             </File>
             <File>
               <FileName>ring_buffer.h</FileName>
